@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+#bbsList {
+	width: 750px;
+	margin: 30px auto;
+	text-align: left;
+}
+
+#title{
+	text-align: center;
+	margin: 30px 0;
+}
+
+.titleBox{
+	 width: 100px;
+	 height: 5px;
+	 background-color: #000;
+	 margin: 20px auto;
+}
+
+#bbsList_header {
+	margin: 0 auto;	
+}
+
+#bbsList_list {
+	clear: both;
+}
+
+#write {
+	height: 40px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#bbsList_list td{
+	float: left;
+	height: 27px;
+	line-height: 27px;
+	text-align: center;
+}
+
+#listTitle {
+	height: 30px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: #000;
+	color: #fff;
+}
+
+#listTitle tr{
+	height: 27px;
+	border-left: 0px solid #5db062;
+	border-right: 0px solid #5db062;
+}
+
+#listTitle th {
+	float: left;
+	line-height: 34px;
+	text-align: center;
+}
+
+#listSearch{
+	height: 27px;
+	line-height: 27px;
+}
+
+#bbsList_list .num {width:60px;}
+#bbsList_list .subject {width:420px;}
+#bbsList_list .hikingDate {width:130px;}
+#bbsList_list .name {width:80px;}
+#bbsList_list .hitCount {width:60px;}
+
+
+#lists {
+	clear: both;
+}
+
+#lists tr{
+	width: 750px;
+	float: left;
+	border-bottom: 1px solid #E4E4E4;
+}
+
+#lists td {
+	height: 35px;
+	line-height: 35px;
+}
+
+#lists tr:last-child{
+	float: none;
+	border-bottom: none;
+}
+
+#lists .pageNum{
+	display:flex;
+	justify-content: center;
+	align-items:center;
+	height: 50px;
+	line-height: 50px;
+	
+}
+
+#lists .nonList th{
+	text-align: center;
+}
+
+#listSearch{	
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+#searchForm {
+	width: 300px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn2 {
+	width:50px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #31B404;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 3px;
+	border: none; 
+}
+
+
+.btn2:hover {
+	cursor: pointer;
+}

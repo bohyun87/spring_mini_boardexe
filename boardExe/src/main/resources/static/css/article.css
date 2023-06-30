@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+#bbs {
+	width: 750px;
+	margin: 30px auto;
+	text-align: left;
+}
+
+#title{
+	text-align: center;
+	margin: 30px 0;
+}
+
+.titleBox{
+	 width: 100px;
+	 height: 5px;
+	 background-color: #000;
+	 margin: 20px auto;
+}
+
+#bbsCreated{
+	width: 600px;
+	overflow: visible;
+	border-top: 3px solid #31B404;
+	border-bottom: 3px solid #31B404;
+	text-align: left;
+}
+
+#bbsArticle{
+	width: 750px;
+	margin: 0 auto;
+	border-top: 3px solid #5db062;
+	border-bottom: 3px solid #5db062;
+}
+
+
+#bbsArticle_header{
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 2px solid #DBDBDB;
+	text-align: center;
+}
+
+#bbsArticle_header p {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.bbsArticle_bottomLine{
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 1px solid #DBDBDB;
+}
+
+#bbsArticle dt {
+	float: left;
+	width: 80px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	background-color: #eee;
+}
+
+#bbsArticle dd{
+	float: left;
+	width: 230px;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+#course_height table{
+	border-spacing: 0;
+}
+
+#course_height th {
+	float: left;
+	width: 80px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	background-color: #eee;
+	font-weight: normal;
+}
+
+#course_height td{
+	float: left;
+	width: 650px;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+	padding-left: 10px;
+	display:flex;
+	align-items:center;
+}
+
+
+#bbsArticle #course_height textarea {
+	font-size: 11px;
+	border: none;
+	resize: none;
+	font-family: 맑은고딕;
+}
+
+#bbsArticle .course {
+	width: 650px;
+}
+
+#bbsArticle_content table{
+	min-height: 250px;		
+}
+
+#bbsArticle_content td {
+	width: 750px;
+}
+
+#bbsArticle_content textarea{
+	width: 725px;
+	min-height: 220px;
+	font-size: 11px;
+	text-align:justify;
+	border: none;
+	resize: none;
+	font-family: 맑은고딕;
+	margin-top: 10px;
+	padding: 10px;
+}
+
+#bbsArticle_footer {
+	clear:both;
+	height:32px;
+	line-height:32px;
+	margin-bottom:20px;
+	margin-top: 10px;
+}
+
+#bbsArticle_footer #leftFooter{
+	float:left;
+	width:300px;
+	text-align:left;
+}
+#bbsArticle_footer #rightFooter{
+	float:right;
+	width:300px;
+	text-align:right;
+}
+
+
+.btn2 {
+	width:50px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #31B404;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 3px;
+	border: none; 
+}
+
+
+.btn2:hover {
+	cursor: pointer;
+}
+
+
+

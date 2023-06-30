@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 20px;
+	font-family: 맑은고딕;
+}
+
+a {
+	cursor: hand;
+	color: #000;
+	text-decoration: none;
+	font-size: 20pt;
+	line-height: 150%;
+}
+
+.wrap {
+	width: 1200px;
+	height: 800px;
+	margin: 70px auto;	
+	overflow: hidden;
+}
+
+.wrap img {
+	width: 1200px;
+	margin-top: -330px;
+}
+
+.wrap span{
+	display: block;
+	position: absolute;
+	top: 30%;
+	left: 33%;
+	font-size: 100px;
+	font-weight:bold;
+	color: #fff;
+	text-align: center;
+	z-index: 100;
+}
+
+.wrap span:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="css/article.css" />
+</th:block>
+
+<div layout:fragment="content" id="bbs">
+
+	<div id="title">
+		<h1>GABBOJAGO 산행</h1>
+		<div class="titleBox"></div>
+	</div>
+	
+	<div id="bbsArticle">
+		<div id="bbsArticle_header">
+			<p th:text="${board.subject}"></p>
+		</div>
+		
+		<div class="bbsArticle_bottomLine">
+			<dl>
+				<dt>작성자</dt>
+				<dd th:text="${board.name}"></dd>
+				<dt>등록일</dt>
+				<dd th:text="${board.regDate}"></dd>
+				
+			</dl>
+		</div>
+		
+		<div class="bbsArticle_bottomLine">
+			<dl>
+				<dt>phone</dt>
+				<dd th:text="${board.phone}"></dd>
+				<dt>sns</dt>
+				<dd th:text="${board.sns}"></dd>
+			</dl>
+		</div>
+		
+		<div class="bbsArticle_bottomLine">
+			<dl>
+				<dt>산행일</dt>
+				<dd th:text="${board.hikingDate}"></dd>
+				<dt>조회수</dt>
+				<dd th:text="${board.hitCount}"></dd>
+			</dl>
+		</div>
+		
+		<div class="bbsArticle_bottomLine" id="course_height">
+			<table border="0">
+				<tr>
+					<th>산행코스</th>
+					<td>
+						<textarea rows="2" th:text="${board.course}" class="course"></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="bbsArticle_content" class="contents">
+			<table  border="0">
+			<tr>
+				<td style="padding-left: 20px 80px 20px 62px" valign="top">
+					<textarea name="content" style="border: none;" class="boxTA noresize"
+					th:text="${board.content}">
+					</textarea>
+				</td>
+			</tr>
+			</table>
+		</div>		
+	</div>
+	
+	<div id="bbsArticle_footer">
+		<div id="leftFooter">
+			<input type="button" value="수정" class="btn2"
+					th:onclick="|location.href='updated?num=@{${board.num}}&@{${params}}'|">
+			<input type="button" value="삭제" class="btn2"
+					th:onclick="|location.href='deleted_ok?num=@{${board.num}}&@{${params}}'|">
+		</div>
+		<div id="rightFooter">
+			<input type="button" value="목록" class="btn2"
+					th:onclick="|location.href='list?@{${params}}'|">
+		</div>	
+	</div>	
+</div>
+	
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+		var errorMessage = [[${errorMessage}]];
+		
+		if(errorMessage != null){
+			alert(errorMessage);
+		}
+	</script>
+</th:block>
+	
+</html>

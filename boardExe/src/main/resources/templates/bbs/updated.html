@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+      
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="css/created.css" />
+</th:block>
+
+<div layout:fragment="content" id="bbs">
+
+	<div id="title">
+		<h1>일정 수정</h1>
+		<div class="titleBox"></div>
+	</div>
+	
+	<form action="/updated_ok" method="post" name="myForm">
+	<div id="bbsCreated">
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>제&nbsp;목</dt>
+				<dd>
+					<input type="text" name="subject" size="80" 
+					th:value="${board.subject}" maxlength="100" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>작성자</dt>
+				<dd>
+					<input type="text" name="name" size="30" 
+					th:value="${board.name}" maxlength="20" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>phone</dt>
+				<dd>
+					<input type="tel" name="phone" size="30" 
+					th:value="${board.phone}" class="boxTF" />
+				</dd>
+				<dt>sns</dt>
+				<dd>
+					<input type="text" name="sns" size="30" 
+					th:value="${board.sns}" maxlength="30" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>산행일</dt>
+				<dd>
+					<input type="text" name="hikingDate" 
+					th:value="${board.hikingDate}" size="30" class="boxTF"  />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>산행코스</dt>
+				<dd>
+					<input type="text" name="course" size="80" 
+					 th:value="${board.course}" maxlength="100" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div id="bbsCreated_content">
+			<dl>
+				<dt>내&nbsp;용</dt>
+				<dd>
+					<textarea rows="12" cols="80" name="content" 
+					th:text="${board.content}" class="boxTA">
+					</textarea>
+				</dd>
+			</dl>				
+		</div>
+		
+		<div class="bbsCreated_noLine">
+			<dl>
+				<dt>패스워드</dt>
+				<dd>
+					<input type="password" name="pwd" size="30"
+					th:value="${board.pwd}" maxlength="7" class="boxTF" />
+				</dd>
+			</dl>
+		</div>
+				
+		<div id="bbsCreated_footer">
+			<input type="hidden" name="num" th:value="${board.num}" />
+			<input type="hidden" name="pageNum" th:value="${pageNum}" />
+			<input type="hidden" name="searchKey" th:value="${searchKey}" />
+			<input type="hidden" name="searchValue" th:value="${searchValue}" />
+			
+			<input type="button" value="수정하기" class="btn2" onclick="sendIt();" />
+			<input type="button" value="수정취소" class="btn2" th:onclick="|location.href='list?@{${params}}'|" />
+		</div>
+		
+	</div>
+	</form>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	 var errorMessage = [[${errorMessage}]];
+     if(errorMessage != null){
+         alert(errorMessage);
+     }
+	
+	function sendIt(){
+		var f = document.myForm;
+		
+		var str = f.subject.value;
+		str = str.trim();
+		
+		if(!str){
+			alert("제목을 입력하세요.");
+			f.subject.focus();
+			return;				
+		}
+		
+		str = f.name.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("이름을 입력하세요.");
+			f.name.focus();
+			return;
+		}
+		
+		str = f.phone.value;
+		str	= str.trim();
+		
+		if(str){
+			if(!isValidPhone(str)){	
+				alert("전화번호를 형식에 맞게 입력하세요.");
+				f.phone.focus();
+				return;
+			} 
+		} else{
+			alert("전화번호를 입력하세요.");
+			f.phone.focus();
+			return;
+		}
+		
+		str = f.sns.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("sns 아이디를 입력하세요.");
+			f.sns.focus();
+			return;
+		}
+		
+		str = f.hikingDate.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("산행날짜를 입력하세요.");
+			f.hikingDate.focus();
+			return;
+		}
+		
+		str = f.course.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("산행코스를 입력하세요.");
+			f.course.focus();
+			return;
+		}
+		
+		str = f.content.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("내용을 입력하세요.");
+			f.content.focus();
+			return;
+		}
+		
+		str = f.pwd.value;
+		str	= str.trim();
+		
+		if(!str){
+			alert("패스워드를 입력하세요. 게시글 수정 및 삭제 시 필요합니다.");
+			f.pwd.focus();
+			return;
+		}
+		
+		f.submit();
+	}
+	</script>
+</script>
+</th:block>
+	
+</html>

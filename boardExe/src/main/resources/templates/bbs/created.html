@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+      
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="css/created.css" />
+</th:block>
+
+<div layout:fragment="content" id="bbs">
+
+	<div id="title">
+		<h1>산행일정 작성하기</h1>
+		<div class="titleBox"></div>
+	</div>
+	
+	<form action="/created" method="post" name="myForm">
+	<div id="bbsCreated">
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>제&nbsp;목</dt>
+				<dd>
+					<input type="text" name="subject" size="60" maxlength="100" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>작성자</dt>
+				<dd>
+					<input type="text" name="name" size="30" maxlength="20" class="boxTF" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>phone</dt>
+				<dd>
+					<input type="text" name="phone" size="30" class="boxTF"
+					placeholder="010-0000-0000" />
+				</dd>
+				<dt>sns</dt>
+				<dd>
+					<input type="text" name="sns" size="30" maxlength="30" class="boxTF"
+					placeholder="@instagram" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>산행일</dt>
+				<dd>
+					<input type="text" name="hikingDate" size="30" class="boxTF"
+					placeholder="YYYY-MM-DD (요일)" />
+				</dd>
+			</dl>		
+		</div>
+		
+		<div class="bbsCreated_bottomLine">
+			<dl>
+				<dt>산행코스</dt>
+				<dd>
+					<input type="text" name="course" size="60" maxlength="100" class="boxTF" 
+					placeholder="들머리 - OO고개 - OO능선 - 정상 - 날머리(원점회귀)"/>
+				</dd>
+			</dl>		
+		</div>
+		
+		<div id="bbsCreated_content">
+			<dl>
+				<dt>내&nbsp;용</dt>
+				<dd>
+					<textarea rows="30" cols="85" name="content" class="boxTA noresize">
+					</textarea>
+				</dd>
+			</dl>			
+		</div>
+		
+		<div class="bbsCreated_noLine">
+			<dl>
+				<dt>패스워드</dt>
+				<dd class="pwdBox" style="width: 500px">
+					<input type="password" name="pwd" size="30" maxlength="7" class="boxTF" />
+					<span>
+						&nbsp;(게시물 수정 및 삭제시 필요!!)
+					</span>
+				</dd>
+			</dl>
+		</div>
+				
+		<div id="bbsCreated_footer">
+			<input type="button" value="submit" class="btn2" onclick="sendIt();" />
+			<input type="reset" value="reset" class="btn2" onclick="document.myForm.subject.focus();" />
+			<input type="button" value="cancel" class="btn2" onclick="javascript:location.href='/list';" />
+		</div>
+		
+	</div>
+	</form>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		var errorMessage = [[${errorMessage}]];
+	
+		if(errorMessage != null){
+			alert(errorMessage);
+		}
+	
+		function sendIt(){
+			var f = document.myForm;
+			
+			var str = f.subject.value;
+			str = str.trim();
+			
+			if(!str){
+				alert("제목을 입력하세요.");
+				f.subject.focus();
+				return;				
+			}
+			
+			str = f.name.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("이름을 입력하세요.");
+				f.name.focus();
+				return;
+			}
+			
+			str = f.phone.value;
+			str	= str.trim();
+			
+			if(str){
+				if(!isValidPhone(str)){	
+					alert("전화번호를 형식에 맞게 입력하세요.");
+					f.phone.focus();
+					return;
+				} 
+			} else{
+				alert("전화번호를 입력하세요.");
+				f.phone.focus();
+				return;
+			}
+			
+			str = f.sns.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("sns 아이디를 입력하세요.");
+				f.sns.focus();
+				return;
+			}
+			
+			str = f.hikingDate.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("산행날짜를 입력하세요.");
+				f.hikingDate.focus();
+				return;
+			}
+			
+			str = f.course.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("산행코스를 입력하세요.");
+				f.course.focus();
+				return;
+			}
+			
+			str = f.content.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("내용을 입력하세요.");
+				f.content.focus();
+				return;
+			}
+			
+			str = f.pwd.value;
+			str	= str.trim();
+			
+			if(!str){
+				alert("패스워드를 입력하세요. 게시글 수정 및 삭제 시 필요합니다.");
+				f.pwd.focus();
+				return;
+			}
+			
+			f.submit();
+		}
+	</script>
+</th:block>
+	
+</html>

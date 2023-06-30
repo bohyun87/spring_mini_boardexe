@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.boardExe.dao.BoardDao">
+	<select id="maxNum" resultType="int" >
+		select nvl(max(num), 0) from boardexe
+	</select>
+ 
+ 	<insert id="insertData" parameterType="Board">
+	 		insert into boardexe values(#{num}, #{subject}, #{name}, #{phone}, #{sns}, #{hikingDate}, #{course}, #{content}, #{pwd}, sysdate ,0)
+ 	</insert>
+ 	
+ 	<select id="getDataCount" parameterType="map" resultType="int">
+ 		select nvl(count(*), 0) from boardexe where ${searchKey} like '%' || #{searchValue} || '%'
+ 	</select>
+ 	
+ 	<select id="getLists" parameterType="map" resultType="Board">
+ 		select * from (
+                select rownum rnum, data.* 
+                from ( select num, subject, name, phone, sns, hikingDate, course, content, to_char(regDate, 'yyyy-mm-dd') regDate   
+                         from boardexe
+                         where ${searchKey} like '%' || #{searchValue} || '%'
+                         order by num desc 
+                      )data
+                )
+                <![CDATA[
+                	where rnum >= #{start} and rnum <= #{end} 
+                ]]>
+ 	</select>
+ 	
+ 	<update id="updateHitCount" parameterType="int">
+ 		update boardexe set hitCount = hitCount + 1 where num = #{num}
+ 	</update>
+ 	
+ 	<select id="getReadData" parameterType="int" resultType="Board">
+ 		select * from boardexe where num=#{num}
+ 	</select>
+ 	
+ 	<update id="updateData" parameterType="Board">
+ 		update boardexe set subject=#{subject}, name=#{name}, phone=#{phone}, sns=#{sns}, 
+ 							hikingDate=#{hikingDate}, course=#{course}, content=#{content}, pwd=#{pwd} where num=#{num}
+ 	</update>
+ 
+ 	<delete id="deleteData" parameterType="int">
+ 		delete boardexe where num=#{num}
+ 	</delete>
+ 	
+</mapper>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+      
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="css/list.css">
+</th:block>
+
+<div layout:fragment="content" id="bbsList">
+		<div id="title">
+			<h1>산행목록</h1>
+			<div class="titleBox"></div>
+		</div>
+	
+		<div id="bbsList_header">
+			<div id="bbsList_list">
+				<div id="write">
+					<input type="button" value="글쓰기" class="btn2" onclick="javascript:location.href='/created';" />
+				</div>
+					
+				<table>
+				<thead id="listTitle">
+					<tr>
+						<th class="num">번호</th>
+						<th class="subject">제목</th>
+						<th class="hikingDate">산행일</th>
+						<th class="name">작성자</th>
+						<th class="hitCount">조회수</th>
+					</tr>
+				</thead>
+				<tbody id="lists">
+					<tr th:if ="${#lists.size(lists)} >0" th:each="board:${lists}">
+						<td class="num" th:text="${board.num}"></td>				
+						<td class="subject">
+							<a th:href="|@{${articleUrl}}&num=@{${board.num}}|" th:text="${board.subject}"></a>
+						</td>				
+						<td class="hikingDate" th:text="${board.hikingDate}"></td>				
+						<td class="name" th:text="${board.name}"></td>				
+						<td class="hitCount" th:text="${board.hitCount}"></td>				
+					</tr>			
+					
+					<tr class="pageNum" th:if="${#lists.size(dataCount)} > 0">
+						<td colspan="5" id="footer">
+							<a th:utext="${pageIndexList}"></a>
+						</td>
+					</tr>
+					
+					<tr class="nonList" th:if="${#lists.size(dataCount)} < 0">
+						<th colspan="5">등록된 게시물이 없습니다.</td>
+					</tr>				
+				</tbody>	
+				</table>			
+			</div>
+			
+			<div id="listSearch">
+				<form action="list" method="post" id="searchForm" name="searchForm">
+					<select name="searchKey" class="selectField">
+						<option value="subject">제목</option>
+						<option value="name">작성자</option>
+						<option value="hikingDate">산행일</option>
+						<option value="content">내용</option>
+					</select>
+					<input type="text" name="searchValue" class="textField" />			
+					<input type="button" value ="검&nbsp;색" class="btn2" onclick="sendIt();" />			
+				</form>
+			</div>
+			
+		</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		var errorMessage1 = [[${param.errorMessage}]];
+		var errorMessage2 = [[${errorMessage}]];
+	
+		if(errorMessage1 != null){
+			alert(errorMessage1);
+		}
+		
+		if(errorMessage2 != null){
+			alert(errorMessage2);
+		}
+	
+	
+		function sendIt(){
+			var f = document.searchForm;
+			var str = f.searchValue.value;
+			str = str.trim();
+			
+			if(!str){
+				alert("검색어를 입력하세요");
+				f.searchValue.focus();
+				return;
+			}
+			
+			f.sumit();
+			
+		}
+	</script>
+</th:block>
+
+</html>
