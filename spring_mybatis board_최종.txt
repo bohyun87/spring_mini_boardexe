@@ -1,0 +1,314 @@
+[2023.06.16(금)]
+
+spring - thymeleaf
+
+Live Reload - 설치
+
+application.properties - 설정 - Model Location 폴더명 변경
+
+[templates] - [thymeleafEx] 폴더생성 - html 7개 생성파일 생성
+
+html - <html xmlns:th="http://www.thymeleaf.org"> 변경
+
+thymeleafExController.java	- 어노테이션 작성
+			- thymeleafExample01 메소드 작성
+			- @GetMapping 어노테이션으로 경로 설정
+			- return  에 경로 작성해서 html 로 데이터 넘겨주기
+
+thymeleafEx01.html		- 코드 작성하기
+			- free fix 작성해서 데이터 받아오기 != JSTL
+
+Board2Application.java	- Run as => spring boot app 실행
+			- url 주소 :  http://localhost/thymeleaf/ex01
+
+thymeleafEx02.html		- 동일하게 작성
+
+
+====================================================
+
+[spring 으로 게시판 만들기]
+
+===================================================
+
+spring - Mybatis board
+
+DB 작성 		- table, commit
+
+각 package, 폴더 생성 - 파일 생성
+
+css, js		- 복붙
+
+fragments 	- haeder.html , footer.html 작성
+
+html		- <link><script> 추가
+		- 하단에 <th:block> 작성
+		- class="content "  추가
+
+index.html  	- <body>
+
+article.html	- <body>작성 복붙
+	    	- <html> 변경
+	    	- <link> 작성
+
+created.html
+list.html
+update.html	- article.html 처럼 작성
+
+
+created.html	- <body>작성 복붙
+		- enctype="" 삭제
+
+list.html		- <body>작성 복붙
+
+update.html	- <body>작성 복붙
+
+
+
+boardMapper.xml	- !DOCTYPE 수정
+		- <mapper> 추가
+
+MyUtil.java	- @Service 어노테이션 추가
+
+BoardServiceImpl	- implements 추가
+		- @Service 어노테이션 추가
+
+Board		- 필드 추가
+		- 어노테이션 추가
+
+BoardController	- @Controller 
+		- index( ) 메소드 추가	- 메인화면
+		- created( ) 메소드 추가 	- 글쓰기 페이지 이동
+		- list( ) 메소드 추가
+
+[2023.06.19(월)]
+지우기	- meta
+	- title
+	- head
+	- body
+
+layput1.html	- <script> 아래 복사
+		 <!-- 각 페이지의 CSS가 작성될 위치 -->
+		<th:block layout:fragment="css"></th:block>
+
+article.html	- <!-- 각 페이지의 CSS가 작성될 위치 --> <link  href="" />  <th:block layout:fragment="css"></th:block>
+
+다른 html 파일도 동일하게 <meta><title><head><body>
+
+
+created.html	- name => subject /  name  / email  / content  / pwd
+		- <form action="/created" method="post" name="myForm">
+		- 하단에 <input> 에 다시입력, 작성취소 => onclick 작성
+		- <script> 작성 - 알림참 작성
+		- <input> 에 등록하기 => onclick 작성
+		- <script> submit 작성
+
+BoardController	- @Autowired - boardService  / myUtil 추가
+		- createdOK(); 메소드 추가
+
+숫자를 자동증가하는 방법	- 1. 시퀀스	2. 숫자 만들어 넣어주기
+
+
+2. 숫자 만들어 넣어주기 ↓
+oracle sql	-  select nvl(max(num), 0) from board;
+
+
+boardMapper.xml	- <mapper> - <select> 구문 작성하기 / resultType= 결과값 타입정하기
+		- sql 문 입력  =>   select nvl(max(num), 0) from board    =>  ; 제외
+		- <insert> => sql 문 입력  = > insert into board values( )
+		- parameterType  => Board 객체로 지정
+		- values 값은 #{ Board.java 필드명 } 으로 지정
+
+BoardDao.java	- boardMapper.xml  의 추상메소드 작성하기
+		- maxnum()  => resultType 이 int 이니까 => public int
+		- insertData() => 받는타임이 없으니까 => public void  / 대신 parameterType 가 Board  이기 때문에 메소드 매개변수  Board board
+
+
+BoardService	- 추상메소드 "BoardDao.java" 동일하게 넣어주기 
+ 
+BoardServiceImpl	- 오버라이드(다형성)  maxnum() , insertData
+		- 객체생성,  @Autowired 추가
+		- return 넣어주기
+
+BoardController.java	- createdOK() 메소드  => int maxNum  작성 => 예외발생 => try/catch
+			- try 안에 Board 객체 생성이 아니고,  매개변수에 Board 넣어주기
+			- HttpServletRequest request, Model model 매개변수에 추가
+			- board.setNum(); 작성 => num 컬럼 숫자 증가 시키기
+			- board.setIpAddr();
+			- boardService.insertData(board);  => 데이터 받아오기
+
+
+updated.html	- created.html <script> 복붙
+		- <input> onclick =>sendIt();
+		- <input type="hidden" /> 코드 4개 작성 해서 name 설정하기
+		- <form> => method, name, action 설정
+		- <input> name 설정 => subject, name, email, content, pwd
+
+BoardController	- 수정하기 페이지 들어가면 기존 내용 띄워주는 코드 작성
+		- updatedOK() 메소드 작성 => method : post 방식 
+		- 기존데이터 끌고 오기  => updated( ) 에 매개변수 request, model 추가  => 메소드 작성
+		- updated() 메소드에 데이터 가져오는 코드 작성 => request.getParameter();
+
+list.html		- <form> 태그 method, name, list  작성
+		- <select> 태그 name 작성
+		- 검색 <input> 태그 onclick => sendIt()
+		- <script> 태그에 검색어 입력, 제출하는 함수 function sendIt() 작성하기
+		- 질문하기<input> 태그 onclick 작성
+
+BoardController	- list() 메소드 => method 작성  = > method = {RequestMethod.GET, RequestMethod.POST}  => get 방식 post 방식 전부 여기로 들어옴
+		- list() 메소드 매개변수 추가 board, request, model
+		- 실행 코드 작성 => getParameter 페이지 데이터 얻어오기
+		- int currentPage  => 현재페이지 번호 설정
+		- searchKey, searchValue =>  설정
+		- if 문의 equalsIgnoreCase =>  
+		- searchValue => try/catch => try 위치를 list() 를 전체 감싸기
+
+게시판에 게시물 7개 등록하기(페이징 5개 분할 예정)
+
+boardMapper.xml	- 검색 된 데이터 갯수 가져오기
+		- <select> 태그 작성 id,  parameterType, resultType 지정 
+		- sql  문 작성    -- 전체 게시물의 갯수 출력  select nvl(count(*), 0) from board;
+		- '%#{searchValue}%'  이렇게 작성하면 하나의 문자열로 인식 => || 를 이용해서 문자분리  => '%' || #{searchValue} || '%'
+
+		- 검색 된 리스트 가져오기
+		- <select> 태그 작성 id,  parameterType, resultType 지정
+		- sql  문 작성    -- 전체 게시물의 갯수 출력  select nvl(count(*), 0) from board;
+		- '%#{searchValue}%'  이렇게 작성하면 하나의 문자열로 인식 => || 를 이용해서 문자분리  => '%' || #{searchValue} || '%'
+
+		- <![CDATA[ where 절 ]]>  => 부등호 사용 시 xml  태그로 인식하는 경우가 있어서 문자열로 인식하게 해주기
+
+BoardDao.java	- 추상메소드 작성 => getDataCount , getLists
+		- throws Exception 추가
+		- 매개변수는 boardMapper.xml 에서 사용한 변수 넣어주기
+
+BoardService.java	- 작성한 추상메소드 복붙
+
+BoardServiceImpl.java	- 추상메소드 오버라이드 추가 => return 값 변경
+
+BoardController.java	- list()  메소드 작성
+			- 1. 전체 게시물의 갯수를 가져온다(페이징 처리에 필요)
+
+MyUtil.java		- 전체페이지의 갯수를 구한다 => getPageCount()
+			-  => pageIndexList() 메소드 작성
+
+BoardController.java	- 2. 페이징 처리를 한다.(준비단계)
+			- 3. 전체 게시물 리스트를 가져온다.
+			- 4. 페이징 처리를 한다.  => String pageIndexLString  까지
+
+MyUtil.java		- pageIndexList 마무리하기
+			- ◀이전 6 7 8 9 10 다음▶ 버튼 만들기
+
+	
+[2023.06.20(화)]
+
+MyUtil.java	- 3. 다음▶ 버튼 만들기
+		
+BoardController.java	- 4. 페이징 처리를 한다.  => String articleUrl =
+			- model 에 데이터 보내기 
+
+list.html		- <tbody> <tr> <td>
+		- <tr> 타임리프 작성
+		- 리스트 전체 갯수 확인하기 -> lists.size(lists)
+		- if 로 확인하고 each 로 돌려주기
+		- <td>  class , 타임리프 추가
+		- <tr> <td> 추가 - 타임리프 추가 
+
+상세페이지
+
+게시물 클릭하고 들어가면 상세페이지 주소 ↓
+http://localhost/article?pageNum=1&searchKey=subject&searchValue=&num=7
+		     게시글 페이지				   게시글 번호
+
+
+BoardController	- article() 메소드 - 매개변수
+		- try/catch
+
+boardMapper.xmxl	- 1.조회수 늘리기
+		- sql 문 가져오기
+		- 조회수 늘리기<update> 사이에 sql 문 넣기 -> num = #{num}
+		- 조회 <select> 사이에 sql 문 넣기 -> num = #{num}
+
+BoardDao.java	- updateHitCount /  getReadData => 추상메소드
+		- resultType 없으면 void / resultType 있으면 그 값을 타입으로 지정
+
+BoardService.java	- 추상메소드 복붙
+
+
+BoardServiceImpl.java	- 오버라이드 -> return  작성
+
+BoardController	- 1.조회수 늘리기 -> boardService.updateHitCount(num);
+		- 2.게시물 데이터 가져오기 -> Board board = boardService.getReadData(num); =>resultType 이 Board 여서 Board 객체에 담아줌
+		- if 문
+		- 게시글의 라인수를 구한다.
+		- model 넘겨주기
+
+article.html	- bbsArticle_header <p> 타임리프
+		- <dd> - 작성자, 줄수, 등록일, 조회수 -> 타임리프 추가
+		- bbsArticle_content <textarea>
+		- bbsArticle_noLine <p> 타임리프
+		- rightFooter 리스트 -> 리스트로 돌아갈 때 원래 보던 페이지로 돌아가기 10page -> 10page  -> th:onclick="||"  => @{${ }}
+		- leftFooter -> 수정, 삭제 ->  th:onclick="||"  => @{${ }}
+
+수정페이지
+
+BoardController	- updated() 전체 try/catch 로 감싸기
+		- 안에 코드 작성 완성하기
+
+
+updated.html	- 각 태그별 타임리프 넣기 - subject, name, email, content, pwd
+		- th:value="${ }"  -> input 태그의 내용을 가져올 때는 value 이용
+		- content 만 value 가 아니고 text
+		- bbsCreated_footer - 타임리프
+		- 수정취소 타임리프
+
+BoardController	- 게시글 수정하는 메소드
+		- 매개변수 추가하기
+		- pageNum, searchKey, searchValue 데이터 받기
+		- param - get방식 데이터 받기
+		- try/catch  -> <br/> 태그를  \r\n 로 바꿔주기
+
+boardMapper.xml	- oracle 에서 update, delete sql 문 만들기
+		- <update>  /  <delete>
+
+
+BoardDao.java	- updateData/  deleteData=> 추상메소드
+		- resultType 없으면 void / resultType 있으면 그 값을 타입으로 지정
+
+BoardService.java	- 추상메소드 복붙
+
+BoardServiceImpl.java	- 오버라이드 -> return  작성
+
+
+BoardController	- updateDataOK() 메소드 마무리 
+		- 삭제하기  -> deleteOK 메소드 만들기
+		- num, pageNum, searchKey, searchValue, param =>데이터 가져오기
+		- try/catch 구문에서 boardService  에서 만들어놓은 deleteData 불러오기
+		- 메소드 마무리
+
+에러 처러
+
+BoardController	-  article()	-> model.addAttribute("errorMessage", "게시글을 불러오는 중 에러가 발생했습니다.");
+
+article.html	- <script> errorMessage 작성
+
+boardMapper.xml	- 코드 변경해서 에러 확인하기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
